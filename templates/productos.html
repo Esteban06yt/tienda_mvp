@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Productos{% endblock %}
+{% block contenido %}
+<h1>Productos</h1>
+<div id="alerta" class="alerta" role="alert" hidden></div>
+
+<div class="columnas">
+  <section class="tarjeta ancha">
+    <label for="filtro">Buscar</label>
+    <input id="filtro" type="search" autocomplete="off" placeholder="Nombre o categoria">
+    <table>
+      <thead><tr><th>Producto</th><th>Categoria</th><th>Precio</th><th>Existencia</th><th>Minimo</th><th>Estado</th><th></th></tr></thead>
+      <tbody id="cuerpo"></tbody>
+    </table>
+    <p id="vacio" class="vacio" hidden>No hay productos que coincidan con la busqueda.</p>
+    <div class="paginacion">
+      <button id="anterior" type="button">Anterior</button>
+      <span id="pagina"></span>
+      <button id="siguiente" type="button">Siguiente</button>
+    </div>
+  </section>
+
+  <section class="tarjeta">
+    <h2 id="titulo-form">Nuevo producto</h2>
+    <form id="form" novalidate>
+      <input type="hidden" id="f-id">
+      <label for="f-nombre">Nombre</label>
+      <input id="f-nombre" maxlength="80"><small class="error" id="e-nombre"></small>
+      <label for="f-categoria">Categoria</label>
+      <input id="f-categoria" maxlength="40"><small class="error" id="e-categoria"></small>
+      <label for="f-precio">Precio (COP)</label>
+      <input id="f-precio" type="number" min="1" step="50"><small class="error" id="e-precio"></small>
+      <label for="f-existencia">Existencia</label>
+      <input id="f-existencia" type="number" min="0"><small class="error" id="e-existencia"></small>
+      <label for="f-stock_minimo">Stock minimo</label>
+      <input id="f-stock_minimo" type="number" min="0"><small class="error" id="e-stock_minimo"></small>
+      <label class="inline"><input id="f-activo" type="checkbox" checked> Activo</label>
+      <div class="acciones">
+        <button type="submit" id="guardar">Guardar</button>
+        <button type="button" id="cancelar">Cancelar</button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='productos.js') }}"></script>{% endblock %}

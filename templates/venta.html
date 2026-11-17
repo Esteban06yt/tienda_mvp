@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block titulo %}Registrar venta{% endblock %}
+{% block contenido %}
+<h1>Registrar venta</h1>
+<div id="alerta" class="alerta" role="alert" hidden></div>
+
+<div class="columnas">
+  <section class="tarjeta" id="seccion-productos">
+    <h2>1. Productos de la venta</h2>
+    <label for="buscar-producto">Buscar producto (nombre o categoria)</label>
+    <input id="buscar-producto" type="search" autocomplete="off" placeholder="Ej: gaseosa">
+    <ul id="resultados-producto" class="lista"></ul>
+    <p id="vacio-busqueda" class="vacio" hidden>No hay productos que coincidan con la busqueda.</p>
+
+    <h3>Detalle</h3>
+    <table id="tabla-items">
+      <thead><tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th></th></tr></thead>
+      <tbody id="cuerpo-items"></tbody>
+    </table>
+    <p id="vacio-items" class="vacio">Aun no hay productos en la venta. Busca y agrega uno.</p>
+
+    <p class="total">Total: <strong id="total">$ 0</strong></p>
+    <button id="btn-confirmar-total" type="button" disabled>Confirmar total con el cliente</button>
+    <p id="estado-total" class="nota"></p>
+  </section>
+
+  <section class="tarjeta" id="seccion-pago">
+    <h2>2. Tendero, cliente y pago</h2>
+    <label for="tendero">Tendero que registra la venta</label>
+    <select id="tendero"></select>
+
+    <label for="buscar-cliente">Cliente (opcional; obligatorio para fiado)</label>
+    <input id="buscar-cliente" type="search" autocomplete="off" placeholder="Nombre o telefono">
+    <ul id="resultados-cliente" class="lista"></ul>
+    <p id="cliente-elegido" class="nota"></p>
+
+    <fieldset id="grupo-pago" disabled>
+      <legend>Forma de pago</legend>
+      <label><input type="radio" name="forma" value="efectivo" checked> Efectivo</label>
+      <label><input type="radio" name="forma" value="transferencia"> Transferencia</label>
+      <label><input type="radio" name="forma" value="fiado"> Fiado</label>
+
+      <div id="bloque-efectivo">
+        <label for="efectivo-recibido">Efectivo recibido</label>
+        <input id="efectivo-recibido" type="number" min="0" step="100">
+        <label class="inline"><input id="billete-verificado" type="checkbox"> Billete verificado</label>
+        <p id="cambio" class="nota"></p>
+      </div>
+      <p id="nota-transferencia" class="nota" hidden>La venta quedara pendiente hasta confirmar que el dinero llego.</p>
+      <p id="nota-fiado" class="nota" hidden>Solo para clientes de confianza. Queda como cuenta pendiente de pago.</p>
+    </fieldset>
+    <p id="ayuda-pago" class="nota">Confirma primero el total con el cliente para habilitar el pago.</p>
+
+    <button id="btn-registrar" type="button" disabled>Registrar venta</button>
+  </section>
+</div>
+
+<section class="tarjeta" id="comprobante" hidden>
+  <h2>Comprobante de venta</h2>
+  <div id="comprobante-detalle"></div>
+  <button id="btn-confirmar-pago" type="button" hidden>Confirmar pago recibido</button>
+  <button id="btn-nueva" type="button">Nueva venta</button>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='venta.js') }}"></script>{% endblock %}
